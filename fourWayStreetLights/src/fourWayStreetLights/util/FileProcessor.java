@@ -16,6 +16,10 @@ public class FileProcessor {
 		// TODO Auto-generated constructor stub
 		file = new File(string);
 		try {
+			if (!file.exists()) {
+				System.out.println("File " + string + " does not exist");
+				System.exit(1);
+			}
 			scanner = new Scanner(file);
 			if (!scanner.hasNextLine()) {
 				System.out.println("File " + string + " does not contain any data");

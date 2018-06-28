@@ -61,4 +61,9 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 		}
 	}
 
+	public void writeToFile() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
