@@ -16,7 +16,7 @@ public class Driver{
 		String line = null;
 		
 		/**
-		 * Checking for valid arguments
+		 * Checking for valid arguments i.e 3
 		 */
 		if (args.length != 3) {
 			System.out.println("Invaid number of arguments");
@@ -35,10 +35,17 @@ public class Driver{
 			System.exit(1);
 		}
 		
-		if (debugLevel < 0 || debugLevel > 3) {
+		/**
+		 * Checks if the debug level is in range or not
+		 */
+		if (debugLevel < 0 || debugLevel > 4) {
 			System.out.println("Debug value out of range");
 			System.exit(1);
 		}
+		
+		/**
+		 * Checking for empty input file
+		 */
 		
 		fileProcessor = new FileProcessor(args[0]);
 		results = new Results(args[1]);
@@ -55,7 +62,7 @@ public class Driver{
 		results.storeNewResult(fourWayStreetLights.getEastCars() + " remaining in East side");
 		results.storeNewResult(fourWayStreetLights.getNorthCars() + " remaining in North side");
 		results.storeNewResult(fourWayStreetLights.getSouthCars() + " remaining in South side");
-		results.storeNewResult(fourWayStreetLights.getWestCars() + " remaning in West side");
+		results.storeNewResult(fourWayStreetLights.getWestCars() + " remaining in West side");
 		results.writeToFile();
 	}
 	

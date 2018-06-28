@@ -15,6 +15,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 	
 	/**
 	 * constructor which sets the private data members to the default values
+	 * and if there is no file it will create the new file 
 	 */
 	public Results(String string) {
 		// TODO Auto-generated constructor stub

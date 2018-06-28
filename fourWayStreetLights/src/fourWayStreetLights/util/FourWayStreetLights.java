@@ -6,10 +6,12 @@ public class FourWayStreetLights {
 	
 	private String North, East, West, South;
 	private int northCars, eastCars, westCars, southCars;
-	//private int directionAdd, directionMinus;
+	private int directionAdd, directionMinus;
+	private int carsAdded, carsReduced;
 	
 	public FourWayStreetLights() {
 		//setDirectionAdd(-1);
+		carsAdded = 0; carsReduced = 0;
 		northCars=0; eastCars=0; westCars=0; southCars=0;
 		North = "red"; East="red"; West="red"; South="red";
 	}
@@ -78,7 +80,7 @@ public class FourWayStreetLights {
 		this.southCars = southCars;
 	}
 	
-	/*public int getDirectionAdd() {
+	public int getDirectionAdd() {
 		return directionAdd;
 	}
 
@@ -92,25 +94,33 @@ public class FourWayStreetLights {
 
 	public void setDirectionMinus(int directionMinus) {
 		this.directionMinus = directionMinus;
-	}*/
+	}
 	
 	public FourWayStreetLights updateFourWayStreetLights(FourWayStreetLights fourWayStreetLightsIn, String line, StreetLightsContext streetLightsContext) {
 		String [] data = line.split(" ");
 		if (data[0].equalsIgnoreCase("add")) {
+			directionMinus = -1;
 			try {
-				switch (data[4]) {
-					case "north": fourWayStreetLightsIn.setNorthCars(fourWayStreetLightsIn.getNorthCars() + Integer.parseInt(data[1]));
-								  /*streetLightsContext.getResults().setCarChange(Integer.parseInt(data[1]) + " Cars added to North");
-								  setDirectionAdd(1);*/
+				switch (data[4].toLowerCase()) {
+					case "north": carsAdded = Integer.parseInt(data[1]);
+								  fourWayStreetLightsIn.setNorthCars(fourWayStreetLightsIn.getNorthCars() + carsAdded);
+								  Logger.writeMessage( carsAdded + " added to North", Logger.DebugLevel.CHANGEINPOOL);
+								  setDirectionAdd(1);
 						break;
-					case "east": fourWayStreetLightsIn.setEastCars(fourWayStreetLightsIn.getEastCars() + Integer.parseInt(data[1]));
-								 //setDirectionAdd(2);
+					case "east": carsAdded = Integer.parseInt(data[1]);
+								 fourWayStreetLightsIn.setEastCars(fourWayStreetLightsIn.getEastCars() + carsAdded);
+								 Logger.writeMessage( carsAdded + " added to East", Logger.DebugLevel.CHANGEINPOOL);
+								 setDirectionAdd(2);
 						break;
-					case "west": fourWayStreetLightsIn.setWestCars(fourWayStreetLightsIn.getWestCars() + Integer.parseInt(data[1]));
-								 //setDirectionAdd(3);
+					case "west": carsAdded = Integer.parseInt(data[1]);
+								 fourWayStreetLightsIn.setWestCars(fourWayStreetLightsIn.getWestCars() + carsAdded);
+								 Logger.writeMessage( carsAdded + " added to West", Logger.DebugLevel.CHANGEINPOOL);
+								 setDirectionAdd(3);
 						break;
-					case "south": fourWayStreetLightsIn.setSouthCars(fourWayStreetLightsIn.getSouthCars() + Integer.parseInt(data[1]));
-								  //setDirectionAdd(4);
+					case "south": carsAdded = Integer.parseInt(data[1]);
+								  fourWayStreetLightsIn.setSouthCars(fourWayStreetLightsIn.getSouthCars() + carsAdded);
+								  Logger.writeMessage( carsAdded + " added to South", Logger.DebugLevel.CHANGEINPOOL);
+								  setDirectionAdd(4);
 						break;
 					default: System.out.println("Not a valid Direction");
 						break;
@@ -120,34 +130,39 @@ public class FourWayStreetLights {
 				System.out.println("Not valid number");
 			}
 		} else if (data[0].equalsIgnoreCase("turn")){
-			switch(data[1]) {
-				case "north": fourWayStreetLightsIn.setNorth(data[2]);
-							  fourWayStreetLightsIn.setNorthCars(
-									  fourWayStreetLightsIn.getNorthCars() >= 2 ? fourWayStreetLightsIn.getNorthCars() - 2
-											  : (fourWayStreetLightsIn.getNorthCars() == 1 ? fourWayStreetLightsIn.getNorthCars() -1 
-										: 0));
-							  //setDirectionMinus(1);
+			directionAdd = -1;
+			switch(data[1].toLowerCase()) {
+				case "north": carsReduced = fourWayStreetLightsIn.getNorthCars() >= 2 ? fourWayStreetLightsIn.getNorthCars() - 2
+						  						: (fourWayStreetLightsIn.getNorthCars() == 1 ? fourWayStreetLightsIn.getNorthCars() -1 
+						  								: 0);
+							  fourWayStreetLightsIn.setNorth(data[2]);
+							  fourWayStreetLightsIn.setNorthCars(carsReduced);
+							  Logger.writeMessage(carsReduced + " remaining in North", Logger.DebugLevel.CHANGEINPOOL);
+							  setDirectionMinus(1);
 					break;
-				case "east": fourWayStreetLightsIn.setEast(data[2]);
-							fourWayStreetLightsIn.setEastCars(
-									fourWayStreetLightsIn.getEastCars() >= 2 ? fourWayStreetLightsIn.getEastCars() - 2 
-											: (fourWayStreetLightsIn.getEastCars() == 1 ? fourWayStreetLightsIn.getEastCars() - 1
-													: 0));
-							//setDirectionMinus(2);
+				case "east": carsReduced = fourWayStreetLightsIn.getEastCars() >= 2 ? fourWayStreetLightsIn.getEastCars() - 2 
+												: (fourWayStreetLightsIn.getEastCars() == 1 ? fourWayStreetLightsIn.getEastCars() - 1
+														: 0);
+							 fourWayStreetLightsIn.setEast(data[2]);
+							 fourWayStreetLightsIn.setEastCars(carsReduced);
+							 Logger.writeMessage(carsReduced + " remaining in East", Logger.DebugLevel.CHANGEINPOOL);
+							 setDirectionMinus(2);
 					break;
-				case "west": fourWayStreetLightsIn.setWest(data[2]);
-							 fourWayStreetLightsIn.setWestCars(
-									 fourWayStreetLightsIn.getWestCars() >= 2 ? fourWayStreetLightsIn.getWestCars() - 2
-											 : (fourWayStreetLightsIn.getWestCars() >= 1 ? fourWayStreetLightsIn.getWestCars() - 1 
-													 : 0));
-							 //setDirectionMinus(3);
+				case "west": carsReduced = fourWayStreetLightsIn.getWestCars() >= 2 ? fourWayStreetLightsIn.getWestCars() - 2
+						 						: (fourWayStreetLightsIn.getWestCars() >= 1 ? fourWayStreetLightsIn.getWestCars() - 1 
+						 								: 0);
+							 fourWayStreetLightsIn.setWest(data[2]);
+							 fourWayStreetLightsIn.setWestCars(carsReduced);
+							 Logger.writeMessage(carsReduced + " remaining in West", Logger.DebugLevel.CHANGEINPOOL);
+							 setDirectionMinus(3);
 					break;
-				case "south": fourWayStreetLightsIn.setSouth(data[2]);
-							  fourWayStreetLightsIn.setSouthCars(
-									  fourWayStreetLightsIn.getSouthCars() >= 2 ? fourWayStreetLightsIn.getSouthCars() - 2
-											  : (fourWayStreetLightsIn.getSouthCars() == 1 ? fourWayStreetLightsIn.getSouthCars() - 1 
-													  : 0));
-							  //setDirectionMinus(4);
+				case "south": carsReduced = fourWayStreetLightsIn.getSouthCars() >= 2 ? fourWayStreetLightsIn.getSouthCars() - 2
+						  						: (fourWayStreetLightsIn.getSouthCars() == 1 ? fourWayStreetLightsIn.getSouthCars() - 1 
+						  								: 0);
+							  fourWayStreetLightsIn.setSouth(data[2]);
+							  fourWayStreetLightsIn.setSouthCars(carsReduced);
+							  Logger.writeMessage(carsReduced + " remaining in South", Logger.DebugLevel.CHANGEINPOOL);
+							  setDirectionMinus(4);
 					break;
 				default: System.out.println("Not a valid Direction");
 					break;

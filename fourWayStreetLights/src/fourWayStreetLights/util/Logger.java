@@ -3,7 +3,7 @@ package fourWayStreetLights.util;
 public class Logger {
 
 	// FIXME: Add more enum values as needed for the assignment
-    public static enum DebugLevel { CONSTRUCTOR, FILE_PROCESSOR, STATES,
+    public static enum DebugLevel { CONSTRUCTOR, FILE_PROCESSOR, STATES, CHANGEINPOOL,
                                    NONE};
 
     private static DebugLevel debugLevel;
@@ -13,6 +13,7 @@ public class Logger {
     public static void setDebugValue (int levelIn) {
 
     	switch (levelIn) {
+    	    case 4: debugLevel = DebugLevel.CHANGEINPOOL; break;
     	    case 3: debugLevel = DebugLevel.STATES; break;
     		case 2: debugLevel = DebugLevel.CONSTRUCTOR; break;
 			case 1: debugLevel = DebugLevel.FILE_PROCESSOR; break;
