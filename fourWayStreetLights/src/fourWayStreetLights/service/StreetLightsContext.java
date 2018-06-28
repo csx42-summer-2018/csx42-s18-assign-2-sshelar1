@@ -16,14 +16,14 @@ public class StreetLightsContext implements StreetLightsStateI{
 	private StreetLightsStateI westState;
 	private StreetLightsStateI southState;
 	
-	
 	public StreetLightsContext(int debugLevel){
 		northState = new NorthStateImpl(this);
 		eastState = new EastStateImpl(this);
 		westState = new WestStateImpl(this);
 		southState = new SouthStateImpl(this);
 		setDebugLevel(debugLevel);
-		Logger.writeMessage("StretLightsContext object instantiated", Logger.DebugLevel.CONSTRUCTOR);
+		setCurrentState(northState);
+		Logger.writeMessage("instantiating StretLightsContext object", Logger.DebugLevel.CONSTRUCTOR);
 	}
 
 	public int getDebugLevel() {
@@ -49,10 +49,43 @@ public class StreetLightsContext implements StreetLightsStateI{
 	public void setCurrentState(StreetLightsStateI currentState) {
 		this.currentState = currentState;
 	}
+	
+	public StreetLightsStateI getNorthState() {
+		return northState;
+	}
+
+	public void setNorthState(StreetLightsStateI northState) {
+		this.northState = northState;
+	}
+
+	public StreetLightsStateI getEastState() {
+		return eastState;
+	}
+
+	public void setEastState(StreetLightsStateI eastState) {
+		this.eastState = eastState;
+	}
+
+	public StreetLightsStateI getWestState() {
+		return westState;
+	}
+
+	public void setWestState(StreetLightsStateI westState) {
+		this.westState = westState;
+	}
+
+	public StreetLightsStateI getSouthState() {
+		return southState;
+	}
+
+	public void setSouthState(StreetLightsStateI southState) {
+		this.southState = southState;
+	}
 
 	@Override
 	public FourWayStreetLights passTraffic(FourWayStreetLights fourWayStreetLights, String line) {
 		// TODO Auto-generated method stub
-		return null;
+		fourWayStreetLights = currentState.passTraffic(fourWayStreetLights, line);
+		return fourWayStreetLights;
 	}
 }

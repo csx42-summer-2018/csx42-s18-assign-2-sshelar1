@@ -5,20 +5,21 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 
 public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 
 	private File file;
-	private StringBuilder outputString;
 	private BufferedWriter bufferedWriter;
+	private ArrayList<String> trace;
 	
 	/**
 	 * constructor which sets the private data members to the default values
 	 */
 	public Results(String string) {
 		// TODO Auto-generated constructor stub
-		outputString = new StringBuilder();
 		file = new File(string);
+		trace = new ArrayList<String>();
 		try {
 			if (!file.exists()) {
 				bufferedWriter = new BufferedWriter(new FileWriter(file));
@@ -30,16 +31,8 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 		}
 	}
 	
-	public StringBuilder getOutputString() {
-		return outputString;
-	}
-
-	public void setOutputString(StringBuilder outputString) {
-		this.outputString = outputString;
-	}
-
 	public void storeNewResult(String string) {
-		outputString.append(string + "\n");
+		trace.add(string);
 	}
 	
 	@Override
@@ -60,10 +53,18 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface{
 			System.out.println("writeToFile : " + e.getMessage());
 		}
 	}
-
+	
 	public void writeToFile() {
 		// TODO Auto-generated method stub
-		
+		try {
+			bufferedWriter = new BufferedWriter(new FileWriter(file));
+			for (int i = 0; i < trace.size(); i++) {
+				bufferedWriter.write(trace.get(i) + "\n");
+			}
+			bufferedWriter.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 
 }

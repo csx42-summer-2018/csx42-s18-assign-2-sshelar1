@@ -52,6 +52,10 @@ public class Driver{
 			fourWayStreetLights = streetLightsContext.passTraffic(fourWayStreetLights, line);
 		}
 		results = streetLightsContext.getResults();
+		results.storeNewResult(fourWayStreetLights.getEastCars() + " remaining in East side");
+		results.storeNewResult(fourWayStreetLights.getNorthCars() + " remaining in North side");
+		results.storeNewResult(fourWayStreetLights.getSouthCars() + " remaining in South side");
+		results.storeNewResult(fourWayStreetLights.getWestCars() + " remaning in West side");
 		results.writeToFile();
 	}
 	

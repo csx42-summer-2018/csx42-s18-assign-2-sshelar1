@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+
 public class FileProcessor {
 	
 	private File file;
@@ -15,6 +16,7 @@ public class FileProcessor {
 	public FileProcessor(String string) {
 		// TODO Auto-generated constructor stub
 		file = new File(string);
+		Logger.writeMessage("Fileprocessor constructor called", Logger.DebugLevel.CONSTRUCTOR);
 		try {
 			if (!file.exists()) {
 				System.out.println("File " + string + " does not exist");
@@ -36,6 +38,7 @@ public class FileProcessor {
 	 * @return
 	 */
 	public String readLine() {
+		Logger.writeMessage("Fileprocessor processing input file", Logger.DebugLevel.FILE_PROCESSOR);
 		while (scanner.hasNextLine()) {
 			return scanner.nextLine();
 		}
